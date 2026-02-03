@@ -1,16 +1,40 @@
-import pandas as pd
-import numpy as np
-from statsmodels.tsa.holtwinters import ExponentialSmoothing
+
+
+
+import pandas as pd 
 from prophet import Prophet
 
-forecast_size = 744
 
-data = pd.read_csv("https://raw.githubusercontent.com/dustywhite7/econ8310-assignment1/refs/heads/main/assignment_data_train.csv")
-format = '%Y-%m-%d %H:%M:%S'
-data['Timestamp'] = pd.to_datetime(data['Timestamp'], format=format)
-data.set_index(pd.DatetimeIndex(data['Timestamp']), inplace=True)
+trainingData = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_trainingData_train.csv")
 
-model = ExponentialSmoothing(data['trips'], trend='mul', damped_trend=True, seasonal='add', seasonal_periods=24*7, freq='h')
-modelFit = model.fit()
-pred = modelFit.forecast(forecast_size)
+trainingData.head()
 
+
+
+#format data for prophet
+trainingDataC = trainingData[['Timestamp', 'trips']]
+trainingDataC.columns = ['ds', 'y']
+trainingDataC.head()
+model = Prophet()
+modelFit = model.fit(trainingDataC)
+
+#import and format test data
+test = pd.read_csv("https://github.com/dustywhite7/econ8310-assignment1/raw/main/assignment_data_test.csv")
+test.head()
+testC = test[['Timestamp']]
+testC.head()
+testC.columns=['ds']
+
+#forecast
+forecast = modelFit.predict(test_p)
+pred = forecast['yhat'].values
+forecast['yhat'].head()
+
+
+
+
+
+
+
+
+s
