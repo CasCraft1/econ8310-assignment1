@@ -26,7 +26,7 @@ testC.head()
 testC.columns=['ds']
 
 #forecast
-forecast = modelFit.predict(test_p)
+forecast = modelFit.predict(testC)
 pred = forecast['yhat'].values
 forecast['yhat'].head()
 
